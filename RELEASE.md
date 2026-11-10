@@ -97,6 +97,37 @@ npm pack --dry-run
 
 ---
 
+## 5. 发到 npm（给「包名安装」这条路用）
+
+GitHub Release 和 npm 是**两条独立的发布通道**，都要走：
+
+| 通道 | 谁在用 | 怎么发 |
+|---|---|---|
+| GitHub Release | 粘 URL / 本地 tgz | 推 `v*` tag，CI 自动发 |
+| **npm** | **`添加插件` 里只输包名** | `npm publish`（手动，见下） |
+
+```powershell
+$npm = 'F:\Deepseek Harness WorkTable\Toolbox\Node\npm.cmd'
+cd 'F:\Deepseek Harness WorkTable\01_项目\dsh-progress-bar'
+& $npm publish --access public
+```
+
+### 前提与坑
+
+- 账号 `kirusama`（邮箱 3384998797@qq.com）。**发布必须有 2FA**，或者用
+  **Granular Access Token 且勾了 Bypass 2FA**。
+- token 要选 **`Read and write (publish and stage)`**。选成
+  **`Read and write (stage only)`** 会只做「暂存发布」，registry 上留下一个
+  `0.0.0-stage` 占位版、真正的版本不上线（我第一次就踩了这个）。
+- 暂存版想删会被挡：`403 Granular access tokens that bypass 2FA may not perform this action`。
+  不影响正常安装（`latest` 指向真实版本），留着即可。
+- 发完用 `npm view dsh-progress-reminder dist-tags` 确认 `latest` 指向新版本。
+
+> ⚠️ **包名不能重复用**：`dsh-progress-bar`（nikolai1976）、`dsh-progress-nudge`
+> （hlysx）都是别人的。本插件只叫 `dsh-progress-reminder`。
+
+---
+
 ## 为什么必须记得改版本号
 
 侧栏的版本检测就是拿「`main` 上 `package.json` 的 `version`」跟本机比。**忘了改，

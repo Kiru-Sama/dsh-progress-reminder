@@ -1,41 +1,56 @@
 # 安装
 
-DSH 桌面版直接装，不需要改 profile、不需要手工建链接：
+## 方式 A：包名（推荐）
 
-```
-设置 → 插件 → 添加插件 → 从本地目录 → 选这个仓库的根目录
+DSH → 设置 → 插件 → 添加插件，输入：
+
+```text
+dsh-progress-reminder
 ```
 
 装完 `文件 → 退出`，再重新启动 DeepSeek Harness。
 
-> 旧版本文档写的是“手工 link”。现在桌面版插件管理器已经支持本地目录，
-> 手工 link 只保留给开发调试/多 profile 的旧流程，普通安装不用看。
+这个包在 npm 上是公开的：<https://www.npmjs.com/package/dsh-progress-reminder>
 
-## 1. 把包放到一个固定的地方
+> ⚠️ **别装错**：npm 上还有 `dsh-progress-bar`（作者 nikolai1976，纯视觉进度条）
+> 和 `dsh-progress-nudge`（作者 hlysx，同样是进度提醒但实现不同）。本插件只叫
+> `dsh-progress-reminder`。
 
-解压/克隆到比如：
+包名走不通时，往下看「方式 B / 方式 C」。
 
+## 方式 B：Release tgz
+
+不需要先装任何东西；把固定地址粘进“添加插件”输入框：
+
+```text
+https://github.com/Kiru-Sama/dsh-progress-reminder/releases/latest/download/dsh-progress-reminder.tgz
 ```
-C:\Users\你\Documents\dsh-progress-reminder
+
+钉死版本就用带版本号的地址：
+
+```text
+https://github.com/Kiru-Sama/dsh-progress-reminder/releases/download/v3.0.0/dsh-progress-reminder-3.0.0.tgz
 ```
 
-这个目录里应该直接能看到 `package.json`、`index.js`、`client.js`。
-**不要**放进 `<profile>/node_modules/`——桌面版会自己建立依赖。
+> 如果 GitHub 的下载域名被挡（`release-assets.githubusercontent.com` 连不上），
+> 可以改用代理前缀，例如在地址前面加 `https://ghfast.top/`，或者直接把 tgz
+> 下载下来、在“添加插件”里粘**本地文件的绝对路径**。
 
-## 2. 从本地目录添加
+## 方式 C：本地目录
 
-打开 DSH：
-
-1. `设置 → 插件`
-2. `添加插件`
-3. 来源选 **从本地目录**
-4. 选择第 1 步的目录（选到能看到 `package.json` 的那一层）
-5. 确认安装
+1. 把仓库解压/克隆到固定位置，比如 `C:\Users\你\Documents\dsh-progress-reminder`
+2. `设置 → 插件 → 添加插件 → 从本地目录`
+3. 选那个目录（选到能看到 `package.json` 的那一层）
 
 管理器会自己把 `dsh-progress-reminder` 写进 profile 的依赖和
 `dsh.profile.bundles`，不需要你手改 JSON。
 
-### 如果提示 already-installed
+> 旧版本文档写的是“手工 link”。现在桌面版插件管理器支持包名/tgz/本地目录，
+> 手工 link 只保留给开发调试/多 profile 的旧流程，普通安装不用看。
+
+## 常见安装错误
+
+### `already-installed`
 
 说明这个 profile 里已经有一份 `dsh-progress-reminder`，通常是旧的手工 link。
 先按“移除旧 link”清掉，再重新添加：
@@ -49,7 +64,7 @@ Remove-Item "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dsh-progress-re
 # 3) 完全退出 DSH，再重新打开，然后重新“从本地目录”添加
 ```
 
-### 如果提示 not-a-bundle
+### `not-a-bundle`
 
 检查包的 `package.json` 里是否有：
 
@@ -63,36 +78,12 @@ Remove-Item "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dsh-progress-re
 
 并且 `cordis.patch.yml` 真的存在。当前版本已经带好，正常不会出现。
 
-### 如果提示 not-a-package
+### `not-a-package`
 
 选错目录了。要选**包根目录**（里面有 `package.json`），不是它的父目录，
 也不是 `node_modules`。
 
-### 方式 B：GitHub Release tgz（复制一条 URL）
-
-仓库打了 `v*` tag 后，GitHub Actions 会自动生成两个 Release 资产：
-
-```text
-dsh-progress-reminder.tgz       # 固定别名，永远指向最新版
-dsh-progress-reminder-2.0.1.tgz # 带版本号，钉死版本时用
-```
-
-在 DSH 的“添加插件”输入框里直接粘贴固定地址：
-
-```text
-https://github.com/Kiru-Sama/dsh-progress-reminder/releases/latest/download/dsh-progress-reminder.tgz
-```
-
-要钉死版本：
-
-```text
-https://github.com/Kiru-Sama/dsh-progress-reminder/releases/download/v2.0.1/dsh-progress-reminder-2.0.1.tgz
-```
-
-这种方式不需要先把仓库下载到本地；装完同样要 `文件 → 退出` 再启动。
-如果 Release 还没发布，用上面的“本地目录”方式即可。
-
-## 3. 重启并确认
+## 重启并确认
 
 **必须 `文件 → 退出` 完全退出再启动**，不是关窗口。新增 bundle 不会热加载。
 
@@ -201,19 +192,33 @@ ln -s /Users/你/Documents/dsh-progress-reminder \
 
 ## 更新 / 回滚
 
-侧栏面板会提示 GitHub 上的新版本（`updateCheck`）。更新时二选一：
+侧栏面板会提示 GitHub 上的新版本（`updateCheck`）。更新时三选一：
 
-- **本地目录**：覆盖原目录（`git pull` / 解压新版），`文件 → 退出` 后重启；
+- **包名（推荐）**：`设置 → 插件` 里升级到新版号，或重新添加一次
+  `dsh-progress-reminder`；也可以直接改版本号后重装：
+
+  ```powershell
+  # 在 profile 目录里
+  pnpm add dsh-progress-reminder@latest
+  ```
+
 - **Release tgz**：在“添加插件”里重新粘贴 latest 地址。若提示 `already-installed`，
   先在 `设置 → 插件` 移除旧版，再添加新版，然后完全退出重启。
+- **本地目录**：覆盖原目录（`git pull` / 解压新版），`文件 → 退出` 后重启。
 
-回滚就换成带版本号的地址，例如：
+回滚到指定版本（走 npm 最省事）：
+
+```powershell
+pnpm add dsh-progress-reminder@3.0.0
+```
+
+或者用带版本号的 Release 地址：
 
 ```text
 https://github.com/Kiru-Sama/dsh-progress-reminder/releases/download/vX.Y.Z/dsh-progress-reminder-X.Y.Z.tgz
 ```
 
-把 `X.Y.Z` 换成要回滚的版本；该版本必须已经发过 Release。
+把 `X.Y.Z` 换成要回滚的版本；该版本必须已经发过 Release 或 npm。
 
 > **配置放在哪**：默认值在**插件包内**的 `cordis.patch.yml` 里，**不在** profile 的
 > `cordis.patch.yml`。想改长期生效的默认值，就改插件目录里那份（重启生效）——

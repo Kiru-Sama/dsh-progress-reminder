@@ -2,7 +2,8 @@
 
 让 Agent 在长回合里**主动、简短地汇报进度**的 DeepSeek Harness 插件。
 
-> **安装 / 卸载 / 已知限制** → [INSTALL.md](INSTALL.md)。零依赖，不用装任何 npm 包。
+> **安装 / 卸载 / 已知限制** → [INSTALL.md](INSTALL.md)。
+> 插件本身**零运行时依赖**（只用 Node 自带模块），装它不需要任何额外依赖。
 
 除了进度提醒，它顺带做三件小事：
 
@@ -369,10 +370,15 @@ level         = min(floor(silentStreak / afterNudges), maxLevel)
 
 ## 安装
 
-两种方式，任选一种：
+**最快的办法：只输一个包名。** `设置 → 插件 → 添加插件`，输入：
 
-**A. 本地目录**：`设置 → 插件 → 添加插件 → 从本地目录`，选这个仓库的根目录
-（里面有 `package.json` 的那层），装完 `文件 → 退出` 再启动。
+```text
+dsh-progress-reminder
+```
+
+装完 `文件 → 退出` 再启动。
+
+包名走不通时（比如 registry 被挡），用这两种：
 
 **B. Release tgz**：在“添加插件”输入框里粘贴固定地址：
 
@@ -380,8 +386,16 @@ level         = min(floor(silentStreak / afterNudges), maxLevel)
 https://github.com/Kiru-Sama/dsh-progress-reminder/releases/latest/download/dsh-progress-reminder.tgz
 ```
 
+**C. 本地目录**：`添加插件 → 从本地目录`，选这个仓库的根目录（里面有
+`package.json` 的那层）。
+
 不需要手改 profile，也不需要手工建链接。旧版“手工 link”步骤保留在
 [INSTALL.md](INSTALL.md) 里，只给开发调试/旧版 DSH 回退用。
+
+> npm 包页：<https://www.npmjs.com/package/dsh-progress-reminder>
+>
+> ⚠️ npm 上另有 `dsh-progress-bar`、`dsh-progress-nudge` 两个**同领域但不同作者**的
+> 插件，别装错。本插件只叫 `dsh-progress-reminder`。
 
 > **新增 bundle 不会热加载**，必须完全退出重启才会激活。
 
