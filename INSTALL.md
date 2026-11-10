@@ -16,7 +16,7 @@ DSH 桌面版直接装，不需要改 profile、不需要手工建链接：
 解压/克隆到比如：
 
 ```
-C:\Users\你\Documents\dsh-progress-bar
+C:\Users\你\Documents\dsh-progress-reminder
 ```
 
 这个目录里应该直接能看到 `package.json`、`index.js`、`client.js`。
@@ -32,20 +32,20 @@ C:\Users\你\Documents\dsh-progress-bar
 4. 选择第 1 步的目录（选到能看到 `package.json` 的那一层）
 5. 确认安装
 
-管理器会自己把 `dsh-progress-bar` 写进 profile 的依赖和
+管理器会自己把 `dsh-progress-reminder` 写进 profile 的依赖和
 `dsh.profile.bundles`，不需要你手改 JSON。
 
 ### 如果提示 already-installed
 
-说明这个 profile 里已经有一份 `dsh-progress-bar`，通常是旧的手工 link。
+说明这个 profile 里已经有一份 `dsh-progress-reminder`，通常是旧的手工 link。
 先按“移除旧 link”清掉，再重新添加：
 
 ```powershell
-# 1) 从 profile 的 package.json 删掉 dsh-progress-bar 的两处：
-#    dependencies.dsh-progress-bar
-#    dsh.profile.bundles 里的 "dsh-progress-bar"
+# 1) 从 profile 的 package.json 删掉 dsh-progress-reminder 的两处：
+#    dependencies.dsh-progress-reminder
+#    dsh.profile.bundles 里的 "dsh-progress-reminder"
 # 2) 删掉旧链接（只删链接，不动源目录）
-Remove-Item "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dsh-progress-bar"
+Remove-Item "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dsh-progress-reminder"
 # 3) 完全退出 DSH，再重新打开，然后重新“从本地目录”添加
 ```
 
@@ -73,20 +73,20 @@ Remove-Item "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dsh-progress-ba
 仓库打了 `v*` tag 后，GitHub Actions 会自动生成两个 Release 资产：
 
 ```text
-dsh-progress-bar.tgz       # 固定别名，永远指向最新版
-dsh-progress-bar-2.0.1.tgz # 带版本号，钉死版本时用
+dsh-progress-reminder.tgz       # 固定别名，永远指向最新版
+dsh-progress-reminder-2.0.1.tgz # 带版本号，钉死版本时用
 ```
 
 在 DSH 的“添加插件”输入框里直接粘贴固定地址：
 
 ```text
-https://github.com/Kiru-Sama/dsh-progress-bar/releases/latest/download/dsh-progress-bar.tgz
+https://github.com/Kiru-Sama/dsh-progress-reminder/releases/latest/download/dsh-progress-reminder.tgz
 ```
 
 要钉死版本：
 
 ```text
-https://github.com/Kiru-Sama/dsh-progress-bar/releases/download/v2.0.1/dsh-progress-bar-2.0.1.tgz
+https://github.com/Kiru-Sama/dsh-progress-reminder/releases/download/v2.0.1/dsh-progress-reminder-2.0.1.tgz
 ```
 
 这种方式不需要先把仓库下载到本地；装完同样要 `文件 → 退出` 再启动。
@@ -106,7 +106,7 @@ https://github.com/Kiru-Sama/dsh-progress-bar/releases/download/v2.0.1/dsh-progr
 
 **如果没出现**：
 
-1. `设置 → 插件` 里能看到 `dsh-progress-bar` 吗？没看到说明第 2 步没装成功；
+1. `设置 → 插件` 里能看到 `dsh-progress-reminder` 吗？没看到说明第 2 步没装成功；
 2. 看安装时管理器给的错误码：`already-installed` / `not-a-bundle` / `not-a-package`，
    分别按上面的排查；
 3. 启动日志里搜 `did not activate`，有的话会点名哪个插件没激活。
@@ -132,14 +132,14 @@ https://github.com/Kiru-Sama/dsh-progress-bar/releases/download/v2.0.1/dsh-progr
   "name": "dsh-profile-desktop",
   "private": true,
   "dependencies": {
-    "dsh-progress-bar": "link:C:/Users/你/Documents/dsh-progress-bar"
+    "dsh-progress-reminder": "link:C:/Users/你/Documents/dsh-progress-reminder"
   },
   "dsh": {
     "profile": {
       "bundles": [
         "@deepseek-ai/dsh-base",
         "@deepseek-ai/dsh-web-app",
-        "dsh-progress-bar"
+        "dsh-progress-reminder"
       ]
     }
   }
@@ -156,15 +156,15 @@ https://github.com/Kiru-Sama/dsh-progress-bar/releases/download/v2.0.1/dsh-progr
 $profile = "$env:USERPROFILE\.dsh\profiles\desktop"
 New-Item -ItemType Directory -Force -Path "$profile\node_modules" | Out-Null
 New-Item -ItemType Junction `
-  -Path   "$profile\node_modules\dsh-progress-bar" `
-  -Target "C:\Users\你\Documents\dsh-progress-bar"
+  -Path   "$profile\node_modules\dsh-progress-reminder" `
+  -Target "C:\Users\你\Documents\dsh-progress-reminder"
 ```
 
 **macOS / Linux：**
 
 ```bash
-ln -s /Users/你/Documents/dsh-progress-bar \
-      ~/.dsh/profiles/desktop/node_modules/dsh-progress-bar
+ln -s /Users/你/Documents/dsh-progress-reminder \
+      ~/.dsh/profiles/desktop/node_modules/dsh-progress-reminder
 ```
 
 ### 3. 完全退出并重启
@@ -210,7 +210,7 @@ ln -s /Users/你/Documents/dsh-progress-bar \
 回滚就换成带版本号的地址，例如：
 
 ```text
-https://github.com/Kiru-Sama/dsh-progress-bar/releases/download/vX.Y.Z/dsh-progress-bar-X.Y.Z.tgz
+https://github.com/Kiru-Sama/dsh-progress-reminder/releases/download/vX.Y.Z/dsh-progress-reminder-X.Y.Z.tgz
 ```
 
 把 `X.Y.Z` 换成要回滚的版本；该版本必须已经发过 Release。
@@ -226,12 +226,12 @@ https://github.com/Kiru-Sama/dsh-progress-bar/releases/download/vX.Y.Z/dsh-progr
 
 ### 桌面版
 
-`设置 → 插件` 里移除 `dsh-progress-bar`，然后 `文件 → 退出` 重启。
+`设置 → 插件` 里移除 `dsh-progress-reminder`，然后 `文件 → 退出` 重启。
 
 ### 手工 link / 管理器不可用
 
 1. 从 profile 的 `package.json` 里删掉两处：`dependencies` 与 `dsh.profile.bundles`；
-2. 删掉 `<profile>/node_modules/dsh-progress-bar`（junction 用 `Remove-Item`，
+2. 删掉 `<profile>/node_modules/dsh-progress-reminder`（junction 用 `Remove-Item`，
    只删链接、不动源目录）；
 3. 重启 DSH。
 

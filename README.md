@@ -1,4 +1,4 @@
-# dsh-progress-bar
+# dsh-progress-reminder
 
 让 Agent 在长回合里**主动、简短地汇报进度**的 DeepSeek Harness 插件。
 
@@ -377,7 +377,7 @@ level         = min(floor(silentStreak / afterNudges), maxLevel)
 **B. Release tgz**：在“添加插件”输入框里粘贴固定地址：
 
 ```text
-https://github.com/Kiru-Sama/dsh-progress-bar/releases/latest/download/dsh-progress-bar.tgz
+https://github.com/Kiru-Sama/dsh-progress-reminder/releases/latest/download/dsh-progress-reminder.tgz
 ```
 
 不需要手改 profile，也不需要手工建链接。旧版“手工 link”步骤保留在
@@ -432,7 +432,7 @@ powershell -File tools\rollback-profile.ps1
 ```
 
 会还原 profile 的 `package.json`、移除 junction。还原后重启 App 即彻底卸载。
-（也可以只把 `dsh.profile.bundles` 里的 `dsh-progress-bar` 删掉再重启。）
+（也可以只把 `dsh.profile.bundles` 里的 `dsh-progress-reminder` 删掉再重启。）
 
 ## 开发备注
 
@@ -448,7 +448,7 @@ powershell -File tools\rollback-profile.ps1
 
 **实测**：插件里 `import z from '@deepseek-ai/schemastery'` 会让整个插件挂掉，
 宿主只在 stderr 报一行
-`progress-nudge (dsh-progress-bar): failed to import`。
+`progress-nudge (dsh-progress-reminder): failed to import`。
 
 原因两层：
 

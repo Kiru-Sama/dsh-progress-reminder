@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url'
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'))
 
-assert.equal(pkg.name, 'dsh-progress-bar', '包名必须是 dsh-progress-bar')
+assert.equal(pkg.name, 'dsh-progress-reminder', '包名必须是 dsh-progress-reminder')
 assert.match(pkg.version, /^\d+\.\d+\.\d+$/, 'version 必须是 x.y.z')
 assert.notEqual(pkg.private, true, '发布包不能标记 private')
 
@@ -36,7 +36,7 @@ for (const file of required) {
   assert.ok(existsSync(join(root, file)), `缺少发布文件：${file}`)
 }
 
-assert.ok(pkg.repository?.url?.includes('dsh-progress-bar'), '必须声明 repository')
+assert.ok(pkg.repository?.url?.includes('dsh-progress-reminder'), '必须声明 repository')
 assert.ok(pkg.engines?.dsh, '必须声明 engines.dsh')
 
 console.log(`✅ 包结构可安装：${pkg.name}@${pkg.version}（bundle patch=${bundle.patch}）`)

@@ -39,14 +39,14 @@ jobs:
           VERSION="$(node -p "require('./package.json').version")"
           mkdir -p dist
           npm pack --pack-destination dist
-          cp "dist/dsh-progress-bar-${VERSION}.tgz" dist/dsh-progress-bar.tgz
+          cp "dist/dsh-progress-reminder-${VERSION}.tgz" dist/dsh-progress-reminder.tgz
           ls -l dist
 
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            dist/dsh-progress-bar-*.tgz
-            dist/dsh-progress-bar.tgz
+            dist/dsh-progress-reminder-*.tgz
+            dist/dsh-progress-reminder.tgz
           fail_on_unmatched_files: true
           generate_release_notes: true

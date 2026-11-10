@@ -8,15 +8,15 @@
 用户装插件最省事的方式是粘贴这条固定地址：
 
 ```text
-https://github.com/Kiru-Sama/dsh-progress-bar/releases/latest/download/dsh-progress-bar.tgz
+https://github.com/Kiru-Sama/dsh-progress-reminder/releases/latest/download/dsh-progress-reminder.tgz
 ```
 
 所以每个版本都要发一个带 tgz 资产的 Release，里面**两个文件缺一不可**：
 
 | 资产 | 用途 |
 |---|---|
-| `dsh-progress-bar-<version>.tgz` | 钉死版本 / 回滚用 |
-| `dsh-progress-bar.tgz` | 固定别名，`releases/latest/download/` 靠它 |
+| `dsh-progress-reminder-<version>.tgz` | 钉死版本 / 回滚用 |
+| `dsh-progress-reminder.tgz` | 固定别名，`releases/latest/download/` 靠它 |
 
 > ⚠️ **有一个已知的漏触发情形，其余正常。**
 >
@@ -27,7 +27,7 @@ https://github.com/Kiru-Sama/dsh-progress-bar/releases/latest/download/dsh-progr
 > 实操上仍然建议推完 tag 去 Releases 页面看一眼——成本 2 秒，比事后排查便宜。
 >
 > ⚠️ **不要给同一个 tag 既手工发 Release 又让 CI 发。** v2.0.2 我手工发了一次，
-> CI 又跑了一次，两者都往同一个 Release 传 `dsh-progress-bar.tgz`：CI 覆盖成功，
+> CI 又跑了一次，两者都往同一个 Release 传 `dsh-progress-reminder.tgz`：CI 覆盖成功，
 > 但这是白跑一次、且资产字节数会变（Windows 的 `npm pack` 与 Linux 打出的 tgz
 > 不完全一样）。**二选一。**
 
@@ -42,7 +42,7 @@ https://github.com/Kiru-Sama/dsh-progress-bar/releases/latest/download/dsh-progr
 或者在仓库里用脚本（需要本机 git 凭证，不上传任何密钥）：
 
 ```powershell
-& 'F:\Deepseek Harness WorkTable\01_项目\dsh-progress-bar-dev\tools\make-release.cjs' vX.Y.Z
+& 'F:\Deepseek Harness WorkTable\01_项目\dsh-progress-reminder-dev\tools\make-release.cjs' vX.Y.Z
 ```
 
 > 该脚本在**开发目录**里，不随包发布（`files` 不含它）。
